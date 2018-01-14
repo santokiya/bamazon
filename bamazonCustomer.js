@@ -15,7 +15,7 @@ connection.connect(function(err) {
     console.log('connected as id ' + connection.threadId)
         // connection.end()
     displayItems()
-})
+});
 
 function displayItems() {
     connection.query('SELECT * FROM products', function(err, results) {
@@ -23,8 +23,8 @@ function displayItems() {
 
         var items = []
         for (var i = 0; i < results.length; i++) {
-            items.push(results[i].id, results[i].product_name, results[i].department_name, results[i].price, results[i].stock_quantity)
-            console.log(results[i].id, results[i].product_name, results[i].department_name, results[i].price, results[i].stock_quantity)
+            items.push(results[i].items_id, results[i].product_name, results[i].department_name, results[i].price, results[i].stock_quantity)
+            console.log(results[i].items_id, results[i].product_name, results[i].department_name, results[i].price, results[i].stock_quantity)
         }
     })
 }
@@ -47,7 +47,7 @@ inquirer
         // get the information of the chosen item
         var chosenItem
         for (var i = 0; i < results.length; i++) {
-            if (results[i].item_name === answer.choice) {
+            if (results[i].items_id === answer.choice) {
                 chosenItem = results[i]
             }
         }
