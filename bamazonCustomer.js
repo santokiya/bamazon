@@ -6,8 +6,7 @@ var connection = mysql.createConnection({
     port: 3306,
 
     user: 'root',
-
-    password: '',
+    password: 'password',
     database: 'bamazon_db'
 })
 
@@ -24,7 +23,7 @@ function displayItems() {
 
         var items = []
         for (var i = 0; i < results.length; i++) {
-            // items.push(results[i].id, results[i].product_name, results[i].department_name, results[i].price, results[i].stock_quantity)
+            items.push(results[i].id, results[i].product_name, results[i].department_name, results[i].price, results[i].stock_quantity)
             console.log(results[i].id, results[i].product_name, results[i].department_name, results[i].price, results[i].stock_quantity)
         }
     })
@@ -47,19 +46,19 @@ inquirer
     .then(function(answer) {
         // get the information of the chosen item
         var chosenItem
-            // for (var i = 0; i < results.length; i++) {
-            //     if (results[i].item_name === answer.choice) {
-            //         chosenItem = results[i]
-            //     }
-            // }
+        for (var i = 0; i < results.length; i++) {
+            if (results[i].item_name === answer.choice) {
+                chosenItem = results[i]
+            }
+        }
 
         console.log(answer.choice)
         console.log(answer.units)
 
         connection.query(`SELECT * FROM products WHERE id = ${answer.choice}`, function(err, results) {
-            // if (err) throw err
-            // console.log(results)
-            // console.log(results.stock_quantity)
+            if (err) throw err
+            console.log(results)
+            console.log(results.stock_quantity)
 
             if (results[0].stock_quantity < answer.units)
                 console.log('Insufficient Quantity')
